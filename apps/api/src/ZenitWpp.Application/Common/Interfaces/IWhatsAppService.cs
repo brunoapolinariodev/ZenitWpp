@@ -1,4 +1,4 @@
-namespace ZenitWpp.Infrastructure.Integrations.WhatsApp;
+namespace ZenitWpp.Application.Common.Interfaces;
 
 public interface IWhatsAppService
 {
