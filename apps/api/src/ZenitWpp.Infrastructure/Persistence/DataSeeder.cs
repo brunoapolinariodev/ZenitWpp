@@ -18,11 +18,13 @@ public static class DataSeeder
 
         try
         {
-            await db.Database.MigrateAsync();
+            // EnsureCreatedAsync cria o schema diretamente do modelo EF sem precisar de migrations.
+            // Substituir por MigrateAsync() quando a primeira migration for gerada.
+            await db.Database.EnsureCreatedAsync();
         }
         catch (Exception ex)
         {
-            logger.LogWarning("Migrate falhou (banco pode não estar disponível): {Message}", ex.Message);
+            logger.LogWarning("EnsureCreated falhou (banco pode não estar disponível): {Message}", ex.Message);
             return;
         }
 
