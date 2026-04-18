@@ -1,8 +1,17 @@
+<div align="center">
+
 # ZenitWpp
 
-Plataforma de atendimento ao cliente via WhatsApp com automação por IA, gerenciamento de filas, suporte multimídia e análises em tempo real.
+<a href="https://freeimage.host/i/Bg5OwyG">
+  <img src="https://iili.io/Bg5OwyG.md.png" alt="ZenitWpp Logo" width="160">
+</a>
+
+### Plataforma escalável para orquestração de fluxos e atendimento via WhatsApp com agentes.
+
+*Solução Full Stack para gerenciamento de filas, integração de LLMs e processamento de dados em tempo real.*
 
 ---
+</div>
 
 ## Stack
 
