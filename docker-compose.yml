@@ -6,7 +6,8 @@ services:
     ports:
       - "4200:80"
     depends_on:
-      - api
+      api:
+        condition: service_healthy
 
   api:
     build:
@@ -24,6 +25,7 @@ services:
       - AiService__BaseUrl=http://ai-service:8000
       - AiService__ApiKey=${AI_SERVICE_API_KEY:-changeme}
       - Storage__Provider=${STORAGE_PROVIDER:-local}
+      - Storage__Local__BasePath=/app/wwwroot/uploads
       - Storage__Local__BaseUrl=http://localhost:5000
       - Storage__S3__BucketName=${S3_BUCKET:-}
       - Storage__S3__ServiceUrl=${S3_SERVICE_URL:-}
@@ -37,6 +39,12 @@ services:
         condition: service_healthy
       redis:
         condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8080/health 2>/dev/null || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
 
   ai-service:
     build:
@@ -50,11 +58,9 @@ services:
       - OPENAI_API_KEY=${OPENAI_API_KEY}
       - WHISPER_MODEL=whisper-1
       - GOOGLE_APPLICATION_CREDENTIALS=/app/credentials/gcp-vision.json
-      - API_KEY=${AI_SERVICE_API_KEY}
+      - API_KEY=${AI_SERVICE_API_KEY:-changeme}
     volumes:
       - ./credentials:/app/credentials:ro
-    depends_on:
-      - api
 
   postgres:
     image: postgres:16-alpine
