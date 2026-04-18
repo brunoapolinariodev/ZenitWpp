@@ -7,16 +7,15 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using StackExchange.Redis;
 using System.Text;
+using ZenitWpp.Application.Common.Interfaces;
 using ZenitWpp.Domain.Agents.Repositories;
 using ZenitWpp.Domain.Automation.Repositories;
 using ZenitWpp.Domain.Campaigns.Repositories;
 using ZenitWpp.Domain.Contacts.Repositories;
 using ZenitWpp.Domain.Conversations.Repositories;
 using ZenitWpp.Domain.Notifications.Repositories;
-using ZenitWpp.Application.Common.Interfaces;
 using ZenitWpp.Infrastructure.Auth;
 using ZenitWpp.Infrastructure.Cache;
-using ZenitWpp.Application.Common.Interfaces;
 using ZenitWpp.Infrastructure.Integrations.AI;
 using ZenitWpp.Infrastructure.Integrations.Storage;
 using ZenitWpp.Infrastructure.Integrations.Translation;
@@ -118,7 +117,12 @@ public static class DependencyInjection
             client.BaseAddress = new Uri(config["AiService:BaseUrl"] ?? "http://ai-service:8000");
         });
 
-        services.AddScoped<IStorageService, NullStorageService>();
+        var storageProvider = config["Storage:Provider"] ?? "local";
+        if (storageProvider.Equals("s3", StringComparison.OrdinalIgnoreCase))
+            services.AddScoped<IStorageService, S3StorageService>();
+        else
+            services.AddScoped<IStorageService, LocalStorageService>();
+
         services.AddScoped<ITranslationService, NullTranslationService>();
 
         return services;

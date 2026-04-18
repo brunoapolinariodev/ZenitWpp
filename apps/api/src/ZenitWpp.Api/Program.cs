@@ -10,6 +10,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddSignalR();
 
+// Garante que o diretório de uploads local existe
+var uploadsPath = Path.Combine(builder.Environment.WebRootPath ?? "wwwroot", "uploads");
+Directory.CreateDirectory(uploadsPath);
+
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure(builder.Configuration);
 
@@ -56,6 +60,7 @@ await DataSeeder.SeedAsync(app.Services);
 
 app.UseMiddleware<GlobalExceptionMiddleware>();
 app.UseCors("AllowAll");
+app.UseStaticFiles();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();

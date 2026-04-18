@@ -1,4 +1,4 @@
-namespace ZenitWpp.Infrastructure.Integrations.Storage;
+namespace ZenitWpp.Application.Common.Interfaces;
 
 public interface IStorageService
 {

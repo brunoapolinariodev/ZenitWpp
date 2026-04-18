@@ -5,6 +5,7 @@ using ZenitWpp.Application.Conversations.Commands.CloseConversation;
 using ZenitWpp.Application.Conversations.Commands.CreateConversation;
 using ZenitWpp.Application.Conversations.Commands.SendMessage;
 using ZenitWpp.Application.Conversations.Commands.TransferConversation;
+using ZenitWpp.Application.Conversations.Commands.UploadMedia;
 using ZenitWpp.Application.Conversations.Queries.GetConversation;
 using ZenitWpp.Application.Conversations.Queries.ListConversations;
 using ZenitWpp.Api.Requests.Conversations;
@@ -38,6 +39,17 @@ public class ConversationController : ControllerBase
     [HttpPost("{id:guid}/messages")]
     public async Task<IActionResult> SendMessage(Guid id, [FromBody] SendMessageRequest request)
         => Ok(await _mediator.Send(new SendMessageCommand(id, request.Content, request.Type, request.Direction)));
+
+    [HttpPost("{id:guid}/messages/media")]
+    [Consumes("multipart/form-data")]
+    public async Task<IActionResult> UploadMedia(Guid id, [FromForm] UploadMediaRequest request)
+    {
+        var file = request.File;
+        await using var stream = file.OpenReadStream();
+        var result = await _mediator.Send(new UploadMediaCommand(
+            id, stream, file.FileName, file.ContentType, request.Direction));
+        return Ok(result);
+    }
 
     [HttpPatch("{id:guid}/transfer")]
     public async Task<IActionResult> Transfer(Guid id, [FromBody] TransferConversationRequest request)
