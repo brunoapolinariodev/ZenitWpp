@@ -1,4 +1,13 @@
 services:
+  web:
+    build:
+      context: ./apps/web
+      dockerfile: Dockerfile
+    ports:
+      - "4200:80"
+    depends_on:
+      - api
+
   api:
     build:
       context: ./apps/api
