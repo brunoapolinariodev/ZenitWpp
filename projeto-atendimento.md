@@ -379,7 +379,7 @@ Cliente inicia conversa
 | `[x]` | Implementar `FlowRepository` | FindByTrigger incluso |
 | `[x]` | Implementar `CampaignRepository` | com Include de Recipients |
 | `[x]` | Implementar `ReminderRepository` | ListPending filtra por data e Sent=false |
-| `[ ]` | Criar primeira migration | aguardando ambiente com PostgreSQL |
+| `[x]` | Criar primeira migration | `InitialCreate` — todos os 8 domínios |
 
 #### Cache e Filas
 | Status | Task | Detalhe |
