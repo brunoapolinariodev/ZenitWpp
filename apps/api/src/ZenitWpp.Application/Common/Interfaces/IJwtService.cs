@@ -1,6 +1,6 @@
 using ZenitWpp.Domain.Agents;
 
-namespace ZenitWpp.Infrastructure.Auth;
+namespace ZenitWpp.Application.Common.Interfaces;
 
 public interface IJwtService
 {

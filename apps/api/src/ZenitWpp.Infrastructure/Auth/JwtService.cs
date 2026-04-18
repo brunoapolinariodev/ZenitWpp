@@ -4,6 +4,7 @@ using System.Security.Cryptography;
 using System.Text;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using ZenitWpp.Application.Common.Interfaces;
 using ZenitWpp.Domain.Agents;
 
 namespace ZenitWpp.Infrastructure.Auth;

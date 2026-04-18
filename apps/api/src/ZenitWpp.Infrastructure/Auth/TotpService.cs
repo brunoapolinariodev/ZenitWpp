@@ -1,4 +1,5 @@
 using System.Security.Cryptography;
+using ZenitWpp.Application.Common.Interfaces;
 
 namespace ZenitWpp.Infrastructure.Auth;
 
