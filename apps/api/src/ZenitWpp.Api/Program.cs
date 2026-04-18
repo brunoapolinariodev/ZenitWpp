@@ -3,6 +3,7 @@ using ZenitWpp.Api.Hubs;
 using ZenitWpp.Api.Middlewares;
 using ZenitWpp.Application;
 using ZenitWpp.Infrastructure;
+using ZenitWpp.Infrastructure.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -50,6 +51,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+await DataSeeder.SeedAsync(app.Services);
 
 app.UseMiddleware<GlobalExceptionMiddleware>();
 app.UseCors("AllowAll");
