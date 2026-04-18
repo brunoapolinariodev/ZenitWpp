@@ -1,5 +1,6 @@
 using System.Net.Http.Json;
 using Microsoft.Extensions.Configuration;
+using ZenitWpp.Application.Common.Interfaces;
 
 namespace ZenitWpp.Infrastructure.Integrations.WhatsApp;
 

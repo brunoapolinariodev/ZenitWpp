@@ -13,8 +13,10 @@ using ZenitWpp.Domain.Campaigns.Repositories;
 using ZenitWpp.Domain.Contacts.Repositories;
 using ZenitWpp.Domain.Conversations.Repositories;
 using ZenitWpp.Domain.Notifications.Repositories;
+using ZenitWpp.Application.Common.Interfaces;
 using ZenitWpp.Infrastructure.Auth;
 using ZenitWpp.Infrastructure.Cache;
+using ZenitWpp.Application.Common.Interfaces;
 using ZenitWpp.Infrastructure.Integrations.AI;
 using ZenitWpp.Infrastructure.Integrations.Storage;
 using ZenitWpp.Infrastructure.Integrations.Translation;
@@ -66,6 +68,7 @@ public static class DependencyInjection
     {
         services.AddScoped<IJwtService, JwtService>();
         services.AddScoped<ITotpService, TotpService>();
+        services.AddScoped<IPasswordHasher, Argon2PasswordHasher>();
 
         services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options =>
