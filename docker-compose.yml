@@ -18,6 +18,24 @@ services:
       redis:
         condition: service_healthy
 
+  ai-service:
+    build:
+      context: ./apps/ai-service
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      - OPENROUTER_API_KEY=${OPENROUTER_API_KEY}
+      - OPENROUTER_MODEL=${OPENROUTER_MODEL:-anthropic/claude-sonnet-4-5}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - WHISPER_MODEL=whisper-1
+      - GOOGLE_APPLICATION_CREDENTIALS=/app/credentials/gcp-vision.json
+      - API_KEY=${AI_SERVICE_API_KEY}
+    volumes:
+      - ./credentials:/app/credentials:ro
+    depends_on:
+      - api
+
   postgres:
     image: postgres:16-alpine
     environment:
