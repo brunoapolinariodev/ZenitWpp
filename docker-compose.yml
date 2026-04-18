@@ -12,6 +12,8 @@ services:
       - Jwt__Secret=CHANGE_ME_IN_PRODUCTION_MIN_32_CHARS!!
       - Jwt__Issuer=ZenitWpp
       - Jwt__Audience=ZenitWpp
+      - AiService__BaseUrl=http://ai-service:8000
+      - AiService__ApiKey=${AI_SERVICE_API_KEY:-changeme}
     depends_on:
       postgres:
         condition: service_healthy

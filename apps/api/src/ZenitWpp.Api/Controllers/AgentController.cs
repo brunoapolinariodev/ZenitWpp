@@ -2,6 +2,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ZenitWpp.Application.Agents.Commands.CreateAgent;
+using ZenitWpp.Application.Agents.Commands.UpdateAgentStatus;
 using ZenitWpp.Application.Agents.Queries.GetAgent;
 using ZenitWpp.Api.Requests.Agents;
 
@@ -27,5 +28,12 @@ public class AgentController : ControllerBase
         var result = await _mediator.Send(
             new CreateAgentCommand(request.Name, request.Email, request.Password, request.Role));
         return CreatedAtAction(nameof(Get), new { id = result.Id }, result);
+    }
+
+    [HttpPatch("{id:guid}/status")]
+    public async Task<IActionResult> UpdateStatus(Guid id, [FromBody] UpdateAgentStatusRequest request)
+    {
+        await _mediator.Send(new UpdateAgentStatusCommand(id, request.IsOnline));
+        return NoContent();
     }
 }

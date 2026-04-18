@@ -16,6 +16,7 @@ using ZenitWpp.Domain.Notifications.Repositories;
 using ZenitWpp.Application.Common.Interfaces;
 using ZenitWpp.Infrastructure.Auth;
 using ZenitWpp.Infrastructure.Cache;
+using ZenitWpp.Application.Common.Interfaces;
 using ZenitWpp.Infrastructure.Integrations.AI;
 using ZenitWpp.Infrastructure.Integrations.Storage;
 using ZenitWpp.Infrastructure.Integrations.Translation;
@@ -112,11 +113,9 @@ public static class DependencyInjection
             client.DefaultRequestHeaders.Add("apikey", config["EvolutionApi:ApiKey"]);
         });
 
-        services.AddHttpClient<IAIService, ClaudeAIService>(client =>
+        services.AddHttpClient<IAIService, AiMicroserviceClient>(client =>
         {
-            client.BaseAddress = new Uri("https://api.anthropic.com");
-            client.DefaultRequestHeaders.Add("x-api-key", config["Claude:ApiKey"]);
-            client.DefaultRequestHeaders.Add("anthropic-version", "2023-06-01");
+            client.BaseAddress = new Uri(config["AiService:BaseUrl"] ?? "http://ai-service:8000");
         });
 
         services.AddScoped<IStorageService, NullStorageService>();
